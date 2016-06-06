@@ -1,0 +1,42 @@
+<html>
+   <head>
+      <!-- CSS -->
+      <link rel="stylesheet" href="site.css" />
+      
+      <!-- Libraries -->
+      <script src="lib/js/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=drawing&extension=.js"></script>
+   </head>
+   <body>
+      <!-- The google map location -->
+      <div id="map"></div>
+      <div>
+         <button id="btnSave">Save</button>
+         <h2>Existing Polygons</h2>
+         <div id="saveContent"></div>
+      </div>
+      <script type="text/javascript" src="zoneMapApp.js"></script>
+      <script type="text/javascript">
+         // TODO: Put the default location to load to, you may want to pull this from DB. This is defaulting to a store in Chicago for now
+         var storeLocation =  new google.maps.LatLng(41.877, -87.634);
+         var storeName = 'Billy Goat Tavern';
+         
+         // TODO: Load saved zones from the database in an array of JSON with the properties [{id: NUMBER, vertices_x: [], vertices_y: []}]
+         var dbItems = [
+           "{\"id\":1,\"vertices_x\":[\"41.877373984584445\",\"41.876878700289986\",\"41.8763554522287\",\"41.87641936061852\",\"41.87726614075048\",\"41.877557718104725\"],\"vertices_y\":[\"-87.63443648815155\",\"-87.63490855693817\",\"-87.63420581817627\",\"-87.63292908668518\",\"-87.63287007808685\",\"-87.63356745243073\"]}"
+         ];
+         
+         // Instantiates the aplication
+         ZoneMapApp.init('map', storeLocation, storeName, dbItems);
+         
+         
+         // Handle clicking the save button
+         $('#btnSave').click(function() {
+	         var content = ZoneMapApp.getZonesJSON();
+	         // TODO: Post to your database here.
+	         $('#saveContent').text(JSON.stringify(content));
+         });
+
+      </script>
+   </body>
+</html>
